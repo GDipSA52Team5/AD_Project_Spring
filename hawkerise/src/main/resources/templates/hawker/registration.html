@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<title>Hawker Registration - HawkeRise</title>
+</head>
+<body>
+
+	<div>
+		<header th:insert="layout/navbar.html :: navbar1"></header>
+	</div>
+
+	<div class="container-fluid" style="padding-top: 70px">
+		<div class="card" style="width: 30%">
+			<div class="card-body">
+				<h4 class="card-title">Registration Form</h4>
+				<hr>
+				
+				<form th:action="@{/hawker/completeRegistration}"th:object="${newHawker}" method="POST">
+				
+					<input type="hidden" th:field="*{id}" th:required="required"/>
+					
+					First Name: <input type="text" th:field="*{firstName}" class="form-control mb-4 col-8"
+						placeholder="First Name" th:required="required">
+						
+					Last Name: <input type="text" th:field="*{lastName}" class="form-control mb-4 col-8"
+						placeholder="Last Name" th:required="required">
+						
+					Hawker Centre: <select th:field="*{centre.name}" class="form-control mb-4 col-8"
+						th:required="required">
+						<option th:each="centre:${centres}" th:value="${centre.name}" th:text="${centre.name}"></option>
+						</select>
+						
+					Unit No.: <input type="text" th:field="*{unitNumber}" class="form-control mb-4 col-8"
+            			placeholder="Unit No." th:required="required" th:errorClass="is-invalid">
+            		<div th:if="${#fields.hasErrors('unitNumber')}" th:errors="*{unitNumber}" class="invalid-feedback"></div>
+						
+					Stall Name: <input type="text" th:field="*{stallName}" class="form-control mb-4 col-8"
+						placeholder="Stall Name" th:required="required">
+						
+					Tags: 
+					<hr>
+					<div class="form-check">  
+						<input type="checkbox" th:field="*{tags}" 
+							th:each="tag:${tags}" th:value="${tag.name}" th:text="${tag.name}" class="mx-2"/></div>
+					<hr>
+						
+					Operating Hours: <input type="text" th:field="*{operatingHours}" class="form-control mb-4 col-8"
+						placeholder="Operating Hours" th:required="required">
+						
+					Contact Number: <input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-8"
+						placeholder="Contact Number" th:required="required">
+						
+					Username: <input type="text" th:field="*{userName}" class="form-control mb-4 col-8"
+						placeholder="Username" th:required="required">
+					
+					Password: <input type="text" th:field="*{password}" class="form-control mb-4 col-8"
+						placeholder="Password" th:required="required">
+						
+					<button type="submit" class="btn btn-dark">Register</button> 
+						&nbsp; &nbsp; 
+				
+				</form>
+				
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

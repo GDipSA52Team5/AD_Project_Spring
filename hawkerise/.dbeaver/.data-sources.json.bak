@@ -1,0 +1,81 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-17b0c347b9f-34a4b7ab4a2cf0f8": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "hawkerise",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "hawkerise",
+				"url": "jdbc:mysql://localhost:3306/hawkerise",
+				"home": "/usr/local/mysql-8.0.25-macos11-x86_64",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"allowPublicKeyRetrieval": "TRUE",
+					"sslMode": "DISABLED"
+				},
+				"auth-model": "native"
+			}
+		},
+		"mysql8-17b0ee22ed6-6f2f0647c7cd5d2a": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "hawkerise 2",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "hawkerise",
+				"url": "jdbc:mysql://localhost:3306/hawkerise",
+				"home": "/usr/local/mysql-8.0.25-macos11-x86_64",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"allowPublicKeyRetrieval": "TRUE",
+					"sslMode": "DISABLED"
+				},
+				"auth-model": "native",
+				"handlers": {}
+			}
+		},
+		"mysql8-17b0ee658d9-7d127182114f1be9": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "hawkerise 3",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "hawkerise",
+				"url": "jdbc:mysql://localhost:3306/hawkerise",
+				"home": "/usr/local/mysql-8.0.25-macos11-x86_64",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"allowPublicKeyRetrieval": "TRUE",
+					"sslMode": "DISABLED"
+				},
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

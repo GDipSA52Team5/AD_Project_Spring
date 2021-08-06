@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<title>Update Hawker Account - HawkeRise</title>
+</head>
+<body>
+	<div>
+		<header th:insert="layout/navbar.html :: navbar3"></header>
+	</div>
+
+	<div class="container-fluid" style="padding-top: 70px">
+		<div class="card" style="width: 30%">
+			<div class="card-body">
+				<h4 class="card-title">Update Account Details</h4>
+				<hr>
+				
+				<form th:action="@{/hawker/saveUpdate}"th:object="${hawkerToUpdate}" method="POST">
+				
+					<input type="hidden" th:field="*{id}" th:required="required"/>
+					<input type="hidden" th:field="*{firstName}" th:required="required"/>
+					<input type="hidden" th:field="*{lastName}" th:required="required"/>
+					<input type="hidden" th:field="*{unitNumber}" th:required="required"/>
+					<input type="hidden" th:field="*{userName}" th:required="required"/>
+						
+					Stall Name: <input type="text" th:field="*{stallName}" class="form-control mb-4 col-8"
+						placeholder="${hawker.stallName}" th:required="required">
+						
+					Contact Number: <input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-8"
+						placeholder="${hawker.contactNumber}" th:required="required">
+				
+					Password: <input type="text" th:field="*{password}" class="form-control mb-4 col-8"
+						placeholder="${hawker.password}" th:required="required">
+						
+					Operating Hours: <input type="text" th:field="*{operatingHours}" class="form-control mb-4 col-8"
+						placeholder="${hawker.operatingHours}" th:required="required">
+						
+					Tags: 
+					<div class="form-check"> 
+						<input type="checkbox" th:field="*{tags}" th:each="tag:${tags}" 
+							th:value="${tag.name}" th:text="${tag.name}" class="mx-2"/></div>
+					<hr>
+						
+					<button type="submit" class="btn btn-info">Save</button> 
+
+				</form>
+				
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
