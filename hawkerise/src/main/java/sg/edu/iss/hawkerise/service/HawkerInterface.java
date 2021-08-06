@@ -1,5 +1,7 @@
 package sg.edu.iss.hawkerise.service;
 
+import java.util.List;
+
 import sg.edu.iss.hawkerise.model.Hawker;
 
 public interface HawkerInterface {
@@ -13,5 +15,11 @@ public interface HawkerInterface {
 	public void createHawker(Hawker hawker);
 	
 	public void update(Hawker hawker);
+	
+	public boolean checkCentreAndUnitNumber(Hawker hawker);
+		
+	public boolean checkUserName(Hawker hawker);
+	
+	public List<Hawker>listHawkers(int id);
 
 }

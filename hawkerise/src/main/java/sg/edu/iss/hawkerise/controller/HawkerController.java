@@ -13,8 +13,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
 import sg.edu.iss.hawkerise.model.Centre;
 import sg.edu.iss.hawkerise.model.Hawker;
 import sg.edu.iss.hawkerise.model.Tag;
@@ -33,23 +31,23 @@ public class HawkerController {
 
 	@Autowired
 	private TagService tservice;
-	
+
 	@RequestMapping(value = "/home")
-	public String home(@ModelAttribute("hawker") Hawker hawker,Model model, HttpSession session) {
-		//if session exists, bring him to the homepage directly
+	public String home(@ModelAttribute("hawker") Hawker hawker, Model model, HttpSession session) {
+		// if session exists, bring him to the homepage directly
 		if (session.getAttribute("hsession") == null) {
 			return "forward:/hawker/login";
 		} else {
 
-				Hawker h = (Hawker) session.getAttribute("hsession");
-				model.addAttribute("hawker", h);
-				return "hawker/home";
+			Hawker h = (Hawker) session.getAttribute("hsession");
+			model.addAttribute("hawker", h);
+			return "hawker/home";
 		}
 	}
-	
+
 	@RequestMapping(value = "/login")
 	public String login(@ModelAttribute("hawker") Hawker hawker, Model model, HttpSession session) {
-		//if session exists, bring him to the homepage directly
+		// if session exists, bring him to the homepage directly
 		if (session.getAttribute("hsession") != null) {
 			return "forward:/hawker/home";
 		} else {
@@ -79,30 +77,29 @@ public class HawkerController {
 		}
 
 		if (session.getAttribute("hsession") != null) {
-			//if session exists, bring him to the homepage directly
+			// if session exists, bring him to the homepage directly
 			Hawker h = hservice.findByUserName(hawker.getUserName());
 			model.addAttribute("hawker", h);
 			return "forward:/hawker/home";
 		} else if (hservice.authenticate(hawker)) {
-			//if session not exists, check the name and password them bring him to homepage
+			// if session not exists, check the name and password them bring him to homepage
 			Hawker h = hservice.findByUserName(hawker.getUserName());
 			session.setAttribute("hsession", h);
 			model.addAttribute("hawker", h);
-			System.out.println(h.getTags()[0]);
 			return "forward:/hawker/home";
 		} else
-			//if wrong retry
+			// if wrong retry
 			return "hawker/login";
 	}
 
 	@RequestMapping(value = "/register")
 	public String register(Model model, HttpSession session) {
-		//if session exists, return to the hawker's homepage
+		// if session exists, return to the hawker's homepage
 		if (session.getAttribute("hsession") != null) {
 			session.removeAttribute("hsession");
 			return "forward:/hawker/register";
-		} 
-		//if session not exists, bring him to the registration to sign-up
+		}
+		// if session not exists, bring him to the registration to sign-up
 		else {
 			Hawker newHawker = new Hawker();
 			model.addAttribute("newHawker", newHawker);
@@ -115,31 +112,40 @@ public class HawkerController {
 	}
 
 	@RequestMapping(value = "/completeRegistration")
-	  public String completeRegisteration(@ModelAttribute("newHawker") @Valid Hawker hawker
-	    , Model model ,BindingResult bindingResult,HttpSession session) {
-	    //if session exists, return to the hawker's homepage
-	    if (session.getAttribute("hsession") != null) {
-	      return "forward:/hawker/home";
-	    } 
-	    //if session not exists, create the new hawker information
-	    else {
-	      if (      
-	        hservice.checkExists(hawker) != false) {
-	        bindingResult.addError(new FieldError("hawker", "unitNumber", "Unit No. already in use! Please check."));
-	        List<Centre> centres = cservice.findAllCentres();
-	        model.addAttribute("centres", centres);
-	        List<Tag> tags = tservice.findAllTags();
-	        model.addAttribute("tags", tags);
-	        return "hawker/registration";
-	      }
-	      else {
-	        Centre belongCentre = cservice.findCentreByName(hawker.getCentre().getName());
-	        hawker.setCentre(belongCentre);
-	        hservice.createHawker(hawker);
-	        return "forward:/hawker/login";    
-	      }
-	    }
-	  }
+	public String completeRegisteration(@ModelAttribute("newHawker") @Valid Hawker hawker,Error error, Model model,
+			BindingResult bindingResult, HttpSession session) {
+		// if session exists, return to the hawker's homepage
+		if (session.getAttribute("hsession") != null) {
+			return "forward:/hawker/home";
+		}
+		// if session not exists, create the new hawker information
+		else {
+			if (bindingResult.hasErrors()) {
+				return "hawker/registration";
+			}
+
+			if (hservice.checkExists(hawker)) {
+				if (hservice.checkCentreAndUnitNumber(hawker)) {
+					bindingResult
+							.addError(new FieldError("hawker", "unitNumber", "Unit No. already in use! Please check."));
+				}
+				if (hservice.checkUserName(hawker)) {
+					bindingResult
+							.addError(new FieldError("hawker", "userName", "UserName already in use! Please check."));
+				}
+				List<Centre> centres = cservice.findAllCentres();
+				model.addAttribute("centres", centres);
+				List<Tag> tags = tservice.findAllTags();
+				model.addAttribute("tags", tags);
+				return "hawker/registration";
+			} else {
+				Centre belongCentre = cservice.findCentreByName(hawker.getCentre().getName());
+				hawker.setCentre(belongCentre);
+				hservice.createHawker(hawker);
+				return "forward:/hawker/login";
+			}
+		}
+	}
 
 	@RequestMapping(value = "/update")
 	public String update(Model model, HttpSession session) {
@@ -155,7 +161,7 @@ public class HawkerController {
 	}
 
 	@RequestMapping(value = "/saveUpdate")
-	public String saveUpdate(@ModelAttribute("hawkerToUpdate") Hawker hawker, HttpSession session,Model model) {
+	public String saveUpdate(@ModelAttribute("hawkerToUpdate") Hawker hawker, HttpSession session, Model model) {
 		if (session.getAttribute("hsession") == null) {
 			return "forward:/hawker/login";
 		} else {

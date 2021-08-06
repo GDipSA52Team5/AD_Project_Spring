@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
+
 
 @Entity
 public class Hawker {
@@ -30,8 +32,9 @@ public class Hawker {
 	
 	private String[] tags;
 
+	private String status;
 
-
+	@Pattern(regexp = "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")
 	private String operatingHours;
 
 	@ManyToOne
@@ -45,13 +48,24 @@ public class Hawker {
 	@OneToMany(mappedBy = "hawker", cascade = {CascadeType.REMOVE})
 	private Set<MenuItem> menuItems;
 
-	@OneToMany(mappedBy = "hawker", cascade = {CascadeType.REMOVE})
-	private Set<Stock> stock;
+//	@OneToMany(mappedBy = "hawker", cascade = {CascadeType.REMOVE})
+//	private Set<Stock> stock;
 
 	public Hawker() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public Hawker(int id, String stallName, String unitNumber, String contactNumber, String[] tags,
+			   String operatingHours) {
+			  super();
+			  this.id = id;
+			  this.stallName = stallName;
+			  this.unitNumber = unitNumber;
+			  this.contactNumber = contactNumber;
+			  this.tags = tags;
+			  this.operatingHours = operatingHours;
+			 }
 
 	public int getId() {
 		return id;
@@ -143,13 +157,13 @@ public class Hawker {
 		this.menuItems = menuItems;
 	}
 
-	public Set<Stock> getStock() {
-		return stock;
-	}
-
-	public void setStock(Set<Stock> stock) {
-		this.stock = stock;
-	}
+//	public Set<Stock> getStock() {
+//		return stock;
+//	}
+//
+//	public void setStock(Set<Stock> stock) {
+//		this.stock = stock;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -166,7 +180,7 @@ public class Hawker {
 			return false;
 		Hawker other = (Hawker) obj;
 		if ((Objects.equals(centre.getName(), other.centre.getName()) && Objects.equals(unitNumber, other.unitNumber))
-				|| Objects.equals(userName, other.userName) || Objects.equals(stallName, other.stallName)) {
+				|| Objects.equals(userName, other.userName)){
 			return true;
 		} else {
 			return false;
@@ -179,6 +193,14 @@ public class Hawker {
 
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 

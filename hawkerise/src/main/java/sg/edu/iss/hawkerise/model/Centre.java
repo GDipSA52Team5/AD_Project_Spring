@@ -33,6 +33,16 @@ public class Centre {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Centre(int id, String name, String address, double latitude, double longitude, String imgUrl) {
+		  super();
+		  this.id = id;
+		  this.name = name;
+		  this.address = address;
+		  this.latitude = latitude;
+		  this.longitude = longitude;
+		  this.imgUrl = imgUrl;
+		 }
+
 	public int getId() {
 		return id;
 	}

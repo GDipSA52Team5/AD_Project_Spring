@@ -1,6 +1,9 @@
 package sg.edu.iss.hawkerise.service;
 
 
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +55,46 @@ public class HawkerService implements HawkerInterface {
 	h.setPassword(hawker.getPassword());
 	h.setOperatingHours(hawker.getOperatingHours());
 	h.setTags(hawker.getTags());
+	h.setStatus(hawker.getStatus());
 	hrepo.saveAndFlush(h);
 
 	}
+
+	@Override
+	public boolean checkCentreAndUnitNumber(Hawker hawker) {
+		boolean isExist = false;
+		List<Hawker> existHawkers = hrepo.findAll();
+		for (Hawker h : existHawkers) {
+			if((Objects.equals(h.getCentre().getName(), hawker.getCentre().getName()) && Objects.equals(h.getUnitNumber(), hawker.getUnitNumber())))
+			{
+				isExist = true;
+				return isExist;
+			}			
+		}
+		return isExist;
+
+	}
+
+
+
+	@Override
+	public boolean checkUserName(Hawker hawker) {
+		boolean isExist = false;
+		List<Hawker> existHawkers = hrepo.findAll();
+		for (Hawker h : existHawkers) {
+			if(Objects.equals(h.getUserName(), hawker.getUserName()))
+			{
+				isExist = true;
+				return isExist;
+			}			
+		}
+		return isExist;
+	}
+	
+	@Override
+	 public List<Hawker> listHawkers(int id) {
+	  
+	  return hrepo.findHawkersByCentreId(id);
+	 }
 
 }

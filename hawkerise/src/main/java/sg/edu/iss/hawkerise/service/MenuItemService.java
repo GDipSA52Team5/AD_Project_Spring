@@ -33,4 +33,22 @@ public class MenuItemService implements MenuItemInterface {
 		mrepo.delete(menuItem);
 	}
 
+	@Override
+	public void updateMenuItem(MenuItem menuItem) {
+		MenuItem m = mrepo.findMenuItemById(menuItem.getId());
+		m.setDescription(menuItem.getDescription());
+		m.setName(menuItem.getName());
+		m.setPrice(menuItem.getPrice());
+		m.setStatus(menuItem.getStatus());
+		m.setPhoto(menuItem.getPhoto());
+		m.setLocalUrl(menuItem.getLocalUrl());
+		mrepo.saveAndFlush(m);
+		
+	}
+	
+	@Override
+	 public List<MenuItem> listMenuItems(int id) {
+	  return mrepo.findMenuItemsByHawkerId(id);
+	 }
+
 }

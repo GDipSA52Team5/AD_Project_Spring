@@ -17,8 +17,8 @@
 
 	<div class="container-fluid" style="padding-top: 70px">
 		<div class="card" style="width: 30%">
-			<div class="card-body">
-				<h4 class="card-title">Add Menu Item</h4>
+			<div class="card-body mb-4 col-11">
+				<h4 class="card-title">Update Menu Item</h4>
 				<hr>
 
 				<form th:action="@{/menu/saveUpdate}" th:object="${menuToUpdate}" method="POST"
@@ -26,20 +26,24 @@
 
 					<input type="hidden" th:field="*{id}" th:required="required" />
 					
-					Photo: <input name="filePhoto" type="file" accept="image/png, image/jpeg" class="custom-file-input"
-						id="customFile">
+					Current Photo:
+					<img alt="" th:src="@{${menuToUpdate.PhotoImagePath}}" style="width: 100px; height: 100px;">
+					
+					 <input name="filePhoto" type="file" accept="image/png, image/jpeg" class="custom-file-input"
+						id="customFile" >
 					<label class="custom-file-label" for="customFile">Product Image</label>
-
-					Name: <input type="text" name="mname" th:field="*{name}" class="form-control mb-4 col-8" 
+					
+					
+					Name: <input type="text" name="mname" th:field="*{name}" class="form-control mb-4 " 
 						placeholder="${menuItem.name}" th:required="required">
 						
-					Description: <input type="text" name="mdesc" th:field="*{description}" class="form-control mb-4 col-8" 
-						placeholder=${menuItem.description} th:required="required"> 
+					Description: <textarea name="mdesc" th:field="*{description}"class="form-control mb-4" 
+						placeholder=${menuItem.description} th:required="required" rows="3"></textarea>
 						
-					Price($): <input name="mprice" type="number" th:field="*{price}" class="form-control mb-4 col-8"
+					Price($): <input name="mprice" type="number" th:field="*{price}" class="form-control mb-4 "
 						placeholder=${menuItem.price} th:required="required" min="0.05" step="0.05"> 
 						
-					Status: <select name="mstatus" th:field="*{status}" class="form-control mb-4 col-8"
+					Status: <select name="mstatus" th:field="*{status}" class="form-control mb-4 "
 						th:required="required">
 						<option value="Available">Available</option>
 						<option value="Running Low">Running Low</option>

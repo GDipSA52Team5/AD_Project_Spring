@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import sg.edu.iss.hawkerise.repo.CentreRepository;
 import sg.edu.iss.hawkerise.repo.HawkerRepository;
 import sg.edu.iss.hawkerise.repo.MenuItemRepository;
-import sg.edu.iss.hawkerise.repo.StockRepository;
 
 @SpringBootApplication
 public class HawkeriseApplication {
@@ -23,8 +22,7 @@ public class HawkeriseApplication {
 	@Autowired
 	MenuItemRepository mrepo;
 	
-	@Autowired
-	StockRepository srepo;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(HawkeriseApplication.class, args);

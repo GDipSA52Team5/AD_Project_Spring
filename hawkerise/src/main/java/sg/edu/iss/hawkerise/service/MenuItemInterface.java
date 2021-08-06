@@ -13,5 +13,9 @@ public interface MenuItemInterface {
 	public MenuItem findById(int menuItemId);
 	
 	public void deleteMenuItem(MenuItem menuItem);
+	
+	public void updateMenuItem(MenuItem menuItem);
+	
+	public List<MenuItem>listMenuItems(int id);
 
 }

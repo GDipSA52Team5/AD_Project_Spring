@@ -42,6 +42,16 @@ public class MenuItem {
 		// TODO Auto-generated constructor stub
 	}
 
+	public MenuItem(int id, String name, String description, double price, String status, String localUrl) {
+		  super();
+		  this.id = id;
+		  this.name = name;
+		  this.description = description;
+		  this.price = price;
+		  this.status = status;
+		  this.localUrl = localUrl;
+		 }
+
 	public int getId() {
 		return id;
 	}

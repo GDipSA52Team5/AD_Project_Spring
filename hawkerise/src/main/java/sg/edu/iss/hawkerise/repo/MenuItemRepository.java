@@ -18,5 +18,8 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Integer> {
 	public List<MenuItem> findMenuItemByHawkerAndName(@Param("susername") String susername,@Param("sname") String sname);
 	
 	public MenuItem findMenuItemById(Integer menuItemId);
+	
+	@Query("select m from MenuItem m where m.hawker.id = :id")
+	 public List<MenuItem> findMenuItemsByHawkerId(@Param("id") int id);
 
 }

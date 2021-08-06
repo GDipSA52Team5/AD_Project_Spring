@@ -3,11 +3,22 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<link th:rel="stylesheet"
+	th:href="@{assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}" />
+<link th:rel="stylesheet"
+	th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+<link rel="stylesheet"
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
 
 <title>Hawker Registration - HawkeRise</title>
 </head>
@@ -19,56 +30,73 @@
 
 	<div class="container-fluid" style="padding-top: 70px">
 		<div class="card" style="width: 30%">
-			<div class="card-body">
+			<div class="card-body mb-4 col-11">
 				<h4 class="card-title">Registration Form</h4>
 				<hr>
-				
-				<form th:action="@{/hawker/completeRegistration}"th:object="${newHawker}" method="POST">
-				
-					<input type="hidden" th:field="*{id}" th:required="required"/>
-					
-					First Name: <input type="text" th:field="*{firstName}" class="form-control mb-4 col-8"
-						placeholder="First Name" th:required="required">
-						
-					Last Name: <input type="text" th:field="*{lastName}" class="form-control mb-4 col-8"
-						placeholder="Last Name" th:required="required">
-						
-					Hawker Centre: <select th:field="*{centre.name}" class="form-control mb-4 col-8"
+
+				<form th:action="@{/hawker/completeRegistration}"
+					th:object="${newHawker}" method="POST">
+
+					<input type="hidden" th:field="*{id}" th:required="required" />
+
+					First Name: <input type="text" th:field="*{firstName}"
+						class="form-control mb-4 " placeholder="First Name"
+						th:required="required"> 
+					Last Name: <input type="text"
+						th:field="*{lastName}" class="form-control mb-4 "
+						placeholder="Last Name" th:required="required"> 
+					Hawker Centre: <select th:field="*{centre.name}"
+						class="form-control mb-4 " th:required="required">
+						<option th:each="centre:${centres}" th:value="${centre.name}"
+							th:text="${centre.name}"></option>
+					</select> 
+					Unit No.: <input type="text" th:field="*{unitNumber}"
+						class="form-control mb-4" placeholder="Unit No."
+						th:required="required" th:errorClass="is-invalid">
+					<div th:if="${#fields.hasErrors('unitNumber')}"
+						th:errors="*{unitNumber}" class="invalid-feedback"></div>
+
+					Stall Name: <input type="text" th:field="*{stallName}"
+						class="form-control mb-4" placeholder="Stall Name"
+						th:required="required"> 
+					Tags:
+					<hr>
+					<div class="form-check" th:each="tag:${tags}">
+						<input type="checkbox" th:field="*{tags}" th:value="${tag.name}"
+							th:text="${tag.name}" class="mx-2" /><br />
+					</div>
+					<hr>
+
+					Business Operation: <input type="text" th:field="*{operatingHours}"
+						class="form-control mb-4 " placeholder="Operating Hours"
+						th:required="required" th:errorClass="is-invalid" th:error>
+					<div th:if="${#fields.hasErrors('operatingHours')}"
+						th:errors="*{operatingHours}" class="invalid-feedback"></div>
+
+					Status: <select th:field="*{status}"
+						class="form-control mb-4 " th:required="required">
+						<option th:value="Open" th:text="Open"></option>
+						<option th:value="Closed" th:text="Closed"></option>
+					</select> 
+					Contact Number: <input type="text" th:field="*{contactNumber}"
+						class="form-control mb-4 " placeholder="Contact Number"
+						th:required="required"> 
+					Username: <input type="text"
+						th:field="*{userName}" class="form-control mb-4 "
+						placeholder="Username" th:required="required"
+						th:errorClass="is-invalid">
+					<div th:if="${#fields.hasErrors('userName')}"
+						th:errors="*{userName}" class="invalid-feedback"></div>
+
+					Password: <input type="text" th:field="*{password}"
+						class="form-control mb-4" placeholder="Password"
 						th:required="required">
-						<option th:each="centre:${centres}" th:value="${centre.name}" th:text="${centre.name}"></option>
-						</select>
-						
-					Unit No.: <input type="text" th:field="*{unitNumber}" class="form-control mb-4 col-8"
-            			placeholder="Unit No." th:required="required" th:errorClass="is-invalid">
-            		<div th:if="${#fields.hasErrors('unitNumber')}" th:errors="*{unitNumber}" class="invalid-feedback"></div>
-						
-					Stall Name: <input type="text" th:field="*{stallName}" class="form-control mb-4 col-8"
-						placeholder="Stall Name" th:required="required">
-						
-					Tags: 
-					<hr>
-					<div class="form-check">  
-						<input type="checkbox" th:field="*{tags}" 
-							th:each="tag:${tags}" th:value="${tag.name}" th:text="${tag.name}" class="mx-2"/></div>
-					<hr>
-						
-					Operating Hours: <input type="text" th:field="*{operatingHours}" class="form-control mb-4 col-8"
-						placeholder="Operating Hours" th:required="required">
-						
-					Contact Number: <input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-8"
-						placeholder="Contact Number" th:required="required">
-						
-					Username: <input type="text" th:field="*{userName}" class="form-control mb-4 col-8"
-						placeholder="Username" th:required="required">
-					
-					Password: <input type="text" th:field="*{password}" class="form-control mb-4 col-8"
-						placeholder="Password" th:required="required">
-						
-					<button type="submit" class="btn btn-dark">Register</button> 
-						&nbsp; &nbsp; 
-				
+
+					<button type="submit" class="btn btn-dark">Register</button>
+					&nbsp; &nbsp;
+
 				</form>
-				
+
 			</div>
 		</div>
 	</div>
