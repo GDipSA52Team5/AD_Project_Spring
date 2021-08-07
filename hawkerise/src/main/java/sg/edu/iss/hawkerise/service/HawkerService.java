@@ -54,6 +54,7 @@ public class HawkerService implements HawkerInterface {
 	h.setContactNumber(hawker.getContactNumber());
 	h.setPassword(hawker.getPassword());
 	h.setOperatingHours(hawker.getOperatingHours());
+	h.setCloseHours(hawker.getCloseHours());
 	h.setTags(hawker.getTags());
 	h.setStatus(hawker.getStatus());
 	hrepo.saveAndFlush(h);
@@ -96,5 +97,33 @@ public class HawkerService implements HawkerInterface {
 	  
 	  return hrepo.findHawkersByCentreId(id);
 	 }
+	
+	@Override
+	public boolean checkValidTime(Hawker hawker) {
+
+		boolean validStatus = true;
+		int startPoint = hawker.getOperatingHours().indexOf(":");
+		String openHour = hawker.getOperatingHours().substring(0, startPoint);
+		String openMinutes = hawker.getOperatingHours().substring(startPoint + 1, hawker.getOperatingHours().length());
+
+		int endPoint = hawker.getCloseHours().indexOf(":");
+		String closeHour = hawker.getCloseHours().substring(0, endPoint);
+		String closeMinutes = hawker.getCloseHours().substring(endPoint + 1, hawker.getCloseHours().length());
+
+		int startH = Integer.parseInt(openHour);
+		int startM = Integer.parseInt(openMinutes);
+		int closeH = Integer.parseInt(closeHour);
+		int closeM = Integer.parseInt(closeMinutes);
+
+		if ((startH - closeH) > 0) {
+			validStatus = false;
+		}
+		if ((startH - closeH) == 0) {
+			if ((startM - closeM) >= 0) {
+				validStatus = false;
+			}
+		}
+		return validStatus;
+	}
 
 }

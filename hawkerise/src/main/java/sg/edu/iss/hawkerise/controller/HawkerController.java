@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.w3c.dom.ls.LSException;
 
 import sg.edu.iss.hawkerise.model.Centre;
 import sg.edu.iss.hawkerise.model.Hawker;
@@ -112,7 +113,7 @@ public class HawkerController {
 	}
 
 	@RequestMapping(value = "/completeRegistration")
-	public String completeRegisteration(@ModelAttribute("newHawker") @Valid Hawker hawker,Error error, Model model,
+	public String completeRegisteration(@ModelAttribute("newHawker") @Valid Hawker hawker, Model model,
 			BindingResult bindingResult, HttpSession session) {
 		// if session exists, return to the hawker's homepage
 		if (session.getAttribute("hsession") != null) {
@@ -120,10 +121,33 @@ public class HawkerController {
 		}
 		// if session not exists, create the new hawker information
 		else {
-			if (bindingResult.hasErrors()) {
-				return "hawker/registration";
-			}
 
+			if (hservice.checkValidTime(hawker) == false) {
+				bindingResult.addError(new FieldError("hawker", "operatingHours",
+						"Closing Hours should be after Opening Hours! Please check."));
+				if (hservice.checkExists(hawker)) {
+					if (hservice.checkCentreAndUnitNumber(hawker)) {
+						bindingResult.addError(
+								new FieldError("hawker", "unitNumber", "Unit No. already in use! Please check."));
+					}
+					if (hservice.checkUserName(hawker)) {
+						bindingResult.addError(
+								new FieldError("hawker", "userName", "UserName already in use! Please check."));
+					}
+					List<Centre> centres = cservice.findAllCentres();
+					model.addAttribute("centres", centres);
+					List<Tag> tags = tservice.findAllTags();
+					model.addAttribute("tags", tags);
+					return "hawker/registration";
+				}
+				else {
+					List<Centre> centres = cservice.findAllCentres();
+					model.addAttribute("centres", centres);
+					List<Tag> tags = tservice.findAllTags();
+					model.addAttribute("tags", tags);
+					return "hawker/registration";
+				}
+			}
 			if (hservice.checkExists(hawker)) {
 				if (hservice.checkCentreAndUnitNumber(hawker)) {
 					bindingResult

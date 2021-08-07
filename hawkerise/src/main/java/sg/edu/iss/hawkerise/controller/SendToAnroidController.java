@@ -65,9 +65,10 @@ public class SendToAnroidController {
 			String unitNumber = hawker.getUnitNumber();
 			String contactNumber = hawker.getContactNumber();
 			String operatingHour = hawker.getOperatingHours();
+			String closeTime = hawker.getCloseHours();
 			String[] tags = hawker.getTags();
 			
-			Hawker h = new Hawker(hawkerId, stallName, unitNumber, contactNumber, tags, operatingHour);
+			Hawker h = new Hawker(hawkerId, stallName, unitNumber, contactNumber, tags, operatingHour, closeTime);
 			
 			resultHawkers.add(h);
 		}

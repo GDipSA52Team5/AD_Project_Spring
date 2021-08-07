@@ -22,4 +22,6 @@ public interface HawkerInterface {
 	
 	public List<Hawker>listHawkers(int id);
 
+	public boolean checkValidTime(Hawker hawker);
+
 }

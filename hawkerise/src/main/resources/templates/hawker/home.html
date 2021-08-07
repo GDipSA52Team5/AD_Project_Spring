@@ -42,11 +42,11 @@
 						<td th:text="*{centre.name}"></td>
 					</tr>
 					<tr>
-						<td>Business Operation:</td>
-						<td th:text="*{operatingHours}"></td>
+						<td>Operating Hours (in 24-hour format):</td>
+						<td><span th:text="*{operatingHours}"></span> to <span th:text="*{closeHours}"></span></td>
 					</tr>
 					<tr>
-						<td>Status:</td>
+						<td>Business Operation:</td>
 						<td th:text="*{status}"></td>
 					</tr>
 					<tr>

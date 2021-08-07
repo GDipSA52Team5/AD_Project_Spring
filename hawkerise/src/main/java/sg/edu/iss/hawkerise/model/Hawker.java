@@ -34,8 +34,8 @@ public class Hawker {
 
 	private String status;
 
-	@Pattern(regexp = "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")
 	private String operatingHours;
+	private String closeHours;
 
 	@ManyToOne
 	@JoinColumn(name = "centre_id")
@@ -57,7 +57,7 @@ public class Hawker {
 	}
 
 	public Hawker(int id, String stallName, String unitNumber, String contactNumber, String[] tags,
-			   String operatingHours) {
+			   String operatingHours, String closeTime) {
 			  super();
 			  this.id = id;
 			  this.stallName = stallName;
@@ -201,6 +201,14 @@ public class Hawker {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCloseHours() {
+		return closeHours;
+	}
+
+	public void setCloseHours(String closeHours) {
+		this.closeHours = closeHours;
 	}
 
 
